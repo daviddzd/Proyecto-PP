@@ -1,0 +1,152 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #343a40;
+    }
+
+    .main-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    /* Contenedor principal del formulario */
+    .form-container {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-header h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 2em;
+        color: #2a3b4c;
+    }
+
+    .form-header p {
+        margin: 0 0 2rem 0;
+        font-size: 1.1em;
+        color: #6c757d;
+    }
+
+    /* Estilo de los campos del formulario */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+
+    .form-group .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .form-group .form-control:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    /* Contenedor para los botones */
+    .form-actions {
+        display: flex;
+        justify-content: flex-end; /* Alinea los botones a la derecha */
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 1em;
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+</style>
+
+<div class="main-container">
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Editar Vacante</h1>
+            <p>Realiza los cambios necesarios y haz clic en "Actualizar" para guardarlos.</p>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="puesto">Puesto</label>
+                <input type="text" id="puesto" name="puesto" class="form-control" value="{{ vacante.puesto }}">
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción de la Vacante</label>
+                <textarea id="descripcion" name="descripcion_vacante" class="form-control">{{ vacante.descripcion_vacante }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="salario">Salario</label>
+                <input type="number" id="salario" name="salario" class="form-control" value="{{ vacante.salario }}">
+            </div>
+
+            <div class="form-group">
+                <label for="prestaciones">Prestaciones</label>
+                <textarea id="prestaciones" name="prestaciones" class="form-control">{{ vacante.prestaciones }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="requisitos">Requisitos</label>
+                <textarea id="requisitos" name="requisitos" class="form-control">{{ vacante.requisitos }}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <a href="/detalle-vacante/{{ vacante.id }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Actualizar Vacante</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

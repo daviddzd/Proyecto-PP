@@ -1,0 +1,193 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #343a40;
+        font-size: 16px; /* Tamaño de fuente base */
+    }
+
+    .main-container {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .header-section h1 {
+        margin: 0;
+        font-size: 1.8em; /* Título más pequeño y formal */
+        color: #2a3b4c;
+    }
+    
+    /* Contenedor principal de la tabla */
+    .table-container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden; /* Para que los bordes de la tabla respeten el radio */
+    }
+
+    /* Estilo de la tabla */
+    .history-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .history-table th, .history-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .history-table thead {
+        background-color: #f8f9fa;
+    }
+
+    .history-table th {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #6c757d;
+        text-transform: uppercase;
+    }
+    
+    .history-table tbody tr:hover {
+        background-color: #f1f3f5;
+    }
+
+    /* Indicador de estatus visual */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .status-badge::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    
+    .status-active::before { background-color: #28a745; } /* Verde */
+    .status-inactive::before { background-color: #6c757d; } /* Gris */
+    
+    /* Botones de acción pequeños para la tabla */
+    .btn-sm {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85em;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+    }
+    
+    .btn-activar { background-color: #28a745; }
+    .btn-activar:hover { background-color: #218838; }
+    
+    .btn-desactivar { background-color: #dc3545; }
+    .btn-desactivar:hover { background-color: #c82333; }
+
+    .btn-regresar {
+        background-color: #6c757d;
+        color: white;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    /* Paginación */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        gap: 1rem;
+    }
+    
+    .pagination a {
+        padding: 0.5rem 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #007bff;
+        background-color: white;
+    }
+    
+    .pagination a:hover {
+        background-color: #e9ecef;
+    }
+    
+    .pagination .current-page {
+        font-weight: bold;
+        color: #495057;
+    }
+
+</style>
+
+<div class="main-container">
+    <section class="header-section">
+        <h1>Historial de Vacantes</h1>
+        <a href="/home" class="btn-regresar">Regresar</a>
+    </section>
+
+    <div class="table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Puesto</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vacante in page_obj %}
+                <tr>
+                    <td>{{ vacante.puesto }}</td>
+                    <td>
+                        {% if vacante.activa %}
+                            <span class="status-badge status-active">Activa</span>
+                        {% else %}
+                            <span class="status-badge status-inactive">Inactiva</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if vacante.activa %}
+                            <a href="/desactivar-vacante/{{ vacante.id }}" class="btn-sm btn-desactivar">Desactivar</a>
+                        {% else %}
+                            <a href="/activar-vacante/{{ vacante.id }}" class="btn-sm btn-activar">Activar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+        {% endif %}
+
+        <span class="current-page">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+        {% endif %}
+    </nav>
+</div>
+
+{% endblock %}

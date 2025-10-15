@@ -1,0 +1,141 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+<style>
+    /* Estilos generales */
+    body {
+        background-color: #f4f7f6;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    /* Título principal */
+    .page-title {
+        color: #2a3b4c;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* Contenedor de las tarjetas de vacantes (Grid Responsivo) */
+    .vacantes-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Estilo de cada tarjeta de vacante */
+    .vacante-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .vacante-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-title {
+        font-size: 1.4em;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .card-salario {
+        font-size: 1.1em;
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Contenedor de los botones de acción dentro de la tarjeta */
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap; /* Para que los botones se ajusten en pantallas pequeñas */
+        margin-top: auto; /* Empuja los botones al final de la tarjeta */
+    }
+
+    /* Estilo base para los botones */
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        text-align: center;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-detalle { background-color: #007bff; }
+    .btn-detalle:hover { background-color: #0056b3; }
+
+    .btn-editar { background-color: #28a745; }
+    .btn-editar:hover { background-color: #218838; }
+
+    .btn-desactivar { background-color: #dc3545; }
+    .btn-desactivar:hover { background-color: #c82333; }
+    
+    /* Botón principal para agregar nueva vacante */
+    .btn-agregar {
+        display: block;
+        width: fit-content;
+        margin: 3rem auto 2rem auto;
+        padding: 0.8rem 2.5rem;
+        background-color: #17a2b8;
+        font-size: 1.1em;
+        text-decoration: none;
+        color: white;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    .btn-agregar:hover {
+        background-color: #138496;
+        transform: translateY(-3px);
+    }
+</style>
+
+<div class="main-container">
+    <h1 class="page-title">
+        {% if vacantes %}
+            Estas son tus vacantes
+        {% else %}
+            Aún no tienes vacantes, ¡registra la primera!
+        {% endif %}
+    </h1>
+
+    <div class="vacantes-container">
+        {% for vacante in vacantes %}
+        <div class="vacante-card">
+            <div>
+                <h2 class="card-title">{{ vacante }}</h2> {# Asumiendo que el campo se llama titulo #}
+                <div class="card-salario">
+                    Salario: ${{ vacante.salario }}
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a href="/detalle-vacante/{{vacante.id}}" class="btn btn-detalle">Detalle</a>
+                <a href="/mod-vacante/{{vacante.id}}" class="btn btn-editar">Editar</a>
+                <a href="/eliminar-vacante/{{vacante.id}}" class="btn btn-desactivar">Desactivar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/agregar-vacante/" class="btn-agregar">Agrega una Nueva Vacante</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+
+<h1> {% if vacantes %} Estas son tus vacantes {% else %} Registra una nueva vacante {% endif %} </h1>
+
+<h2>
+    {% for vacante in vacantes %}
+    <div>
+        {{vacante}}
+
+        <div>
+            Salario: {{vacante.salario}}
+        </div>
+
+        <p>
+            <a href="/detalle-vacante/{{vacante.id}}"> ir al detalle </a>
+            <a href="/eliminar-vacante/{{vacante.id}}"> Desactivar </a>
+            <a href="/mod-vacante/{{vacante.id}}"> editar </a>
+        </p>
+
+    </div>
+    {% endfor %}
+</h2>
+
+<a href="/agregar-vacante/"> Agrega una Nueva Vacante </a>
+
+{% endblock %}
+

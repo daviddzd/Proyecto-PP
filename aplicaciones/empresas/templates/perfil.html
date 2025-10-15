@@ -1,0 +1,146 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #343a40;
+    }
+
+    .main-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2em;
+        color: #2a3b4c;
+        margin-bottom: 2rem;
+    }
+
+    /* Contenedor principal con layout de dos columnas */
+    .profile-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Columna de info más ancha que la de acciones */
+        gap: 2rem;
+    }
+
+    /* Tarjeta de información del perfil */
+    .profile-card {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    }
+    
+    .profile-card .company-name {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: #2a3b4c;
+        margin: 0 0 0.5rem 0;
+    }
+    
+    .profile-card .username {
+        font-size: 1.1em;
+        color: #6c757d;
+        margin-bottom: 2rem;
+    }
+    
+    .info-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-group .label {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #6c757d;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-group .value {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #343a40;
+        white-space: pre-wrap; /* Respeta saltos de línea en la descripción */
+    }
+
+    /* Panel de acciones */
+    .actions-panel {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        align-self: start; /* Para que no se estire si el contenido del perfil es largo */
+    }
+    
+    .actions-panel h3 {
+        margin-top: 0;
+        font-size: 1.2em;
+        color: #2a3b4c;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .actions-panel .btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1rem;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        font-size: 1em;
+        font-weight: 500;
+        color: #343a40;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    
+    .actions-panel .btn:hover {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+    }
+
+    /* Responsive: en pantallas pequeñas, se apilan las columnas */
+    @media (max-width: 768px) {
+        .profile-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <div class="page-header">
+        <h1>Perfil de la Empresa</h1>
+    </div>
+
+    <div class="profile-grid">
+        <div class="profile-card">
+            <h2 class="company-name">{{ empresa.nombre }}</h2>
+            <p class="username">Usuario asociado: <strong>{{ username }}</strong></p>
+
+            <div class="info-group">
+                <div class="label">Descripción</div>
+                <div class="value">{{ empresa.descripcion }}</div>
+            </div>
+
+            <div class="info-group">
+                <div class="label">Dirección</div>
+                <div class="value">{{ empresa.direccion }}</div>
+            </div>
+        </div>
+
+        <div class="actions-panel">
+            <h3>Administrar Perfil</h3>
+            <a href="#" class="btn">✏️ Actualizar Perfil (Dirección y Descripción)</a>
+            <a href="#" class="btn">🔒 Cambiar Contraseña</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

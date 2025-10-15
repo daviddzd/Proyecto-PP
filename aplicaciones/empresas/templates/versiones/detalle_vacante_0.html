@@ -1,0 +1,37 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+
+<h1> Detalle de la Vacante </h1>
+
+<div>
+    Nombre: {{vacante.puesto}}
+</div>
+
+<div>
+    Empresa: {{vacante.empresa}}
+</div>
+
+<div>
+    Descripcion: {{vacante.descripcion_vacante}}
+</div>
+
+<div>
+    Salario: {{vacante.salario}}
+</div>
+
+<div>
+    Prestaciones: {{vacante.prestaciones}}
+</div>
+
+<div>
+    Requisitos: {{vacante.requisitos}}
+</div>
+
+<p>
+    <a href="/home/">
+        Regresar
+    </a>
+</p>
+
+{% endblock %}

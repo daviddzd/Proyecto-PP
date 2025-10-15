@@ -1,0 +1,217 @@
+{% extends 'nav_bar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #343a40;
+    }
+
+    .main-container {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    /* --- ENCABEZADO DE GESTIÓN --- */
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .header-title h1 {
+        margin: 0 0 0.25rem 0;
+        font-size: 2.2em;
+        color: #2a3b4c;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: white;
+        background-color: #28a745; /* Verde para activa */
+        border-radius: 50px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+    }
+    .btn-editar { background-color: #007bff; }
+    .btn-editar:hover { background-color: #0056b3; }
+
+    .btn-desactivar { background-color: #6c757d; }
+    .btn-desactivar:hover { background-color: #5a6268; }
+
+    /* --- PANEL DE ESTADÍSTICAS --- */
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+    .stat-box {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+        text-align: center;
+    }
+    .stat-box .number { font-size: 2.5em; font-weight: 700; color: #007bff; }
+    .stat-box .label { font-size: 1em; color: #6c757d; }
+    
+    /* --- SECCIÓN DE POSTULANTES --- */
+    .applicants-section {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+        margin-bottom: 2.5rem;
+    }
+    .applicants-section h2 {
+        margin-top: 0;
+        color: #2a3b4c;
+    }
+    
+    .applicant-list .applicant-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .applicant-list .applicant-item:last-child {
+        border-bottom: none;
+    }
+    
+    .applicant-info .name {
+        font-weight: bold;
+        color: #343a40;
+    }
+    
+    .applicant-info .date {
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+    
+    .btn-ver-perfil {
+        background-color: #e9ecef;
+        color: #343a40;
+        font-size: 0.9em;
+        padding: 0.4rem 0.8rem;
+    }
+    .btn-ver-perfil:hover { background-color: #dee2e6; }
+    
+    .view-all-link {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    /* --- DETALLES DE LA VACANTE (REFERENCIA) --- */
+    .details-section {
+        margin-top: 2rem;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+    }
+
+    .details-section h2 { margin-top: 0; }
+    
+    .section h3 {
+        font-size: 1.2em;
+        color: #2a3b4c;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 1rem;
+    }
+    
+    .section p, .section ul {
+        line-height: 1.6;
+        color: #495057;
+    }
+
+</style>
+
+<div class="main-container">
+
+    <section class="header-section">
+        <div class="header-title">
+            <h1>{{ vacante.puesto }}</h1>
+            <span class="status-badge"> {% if vacante.activa %} Activa {% else %} Desactivada {% endif %} </span>
+        </div>
+        <div class="action-buttons">
+            <a href="/mod-vacante/{{vacante.id}}" class="btn btn-editar">Editar Vacante</a>
+            <a href="/eliminar-vacante/{{vacante.id}}" class="btn btn-desactivar">Desactivar</a>
+        </div>
+    </section>
+
+    <section class="dashboard-stats">
+        <div class="stat-box">
+            <div class="number">1,204</div> <div class="label">Vistas Totales</div>
+        </div>
+        <div class="stat-box">
+            <div class="number"> {{vacante.postulaciones}} </div> <div class="label">Postulantes</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">8</div> <div class="label">Nuevos (últ. 7 días)</div>
+        </div>
+    </section>
+    
+    <section class="applicants-section">
+        <h2>Postulantes Recientes</h2>
+        <div class="applicant-list">
+            <div class="applicant-item">
+                <div class="applicant-info">
+                    <div class="name">Ana García López</div>
+                    <div class="date">Postuló el 07 de Octubre, 2025</div>
+                </div>
+                <a href="#" class="btn btn-ver-perfil">Ver Perfil</a>
+            </div>
+            <div class="applicant-item">
+                <div class="applicant-info">
+                    <div class="name">Carlos Martinez</div>
+                    <div class="date">Postuló el 06 de Octubre, 2025</div>
+                </div>
+                <a href="#" class="btn btn-ver-perfil">Ver Perfil</a>
+            </div>
+            </div>
+        <a href="#" class="view-all-link">Ver todos los postulantes &rarr;</a>
+    </section>
+
+    <section class="details-section">
+        <h2>Detalles de la Publicación</h2>
+        <div class="section">
+            <h3>Descripción del Puesto</h3>
+            <p>{{ vacante.descripcion_vacante }}</p>
+        </div>
+         <div class="section">
+            <h3>Requisitos</h3>
+            <p>{{ vacante.requisitos|linebreaksbr }}</p>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
