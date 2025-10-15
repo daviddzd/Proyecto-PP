@@ -1,0 +1,8 @@
+<h1> Pagina de Registro </h1>  
+<p> Esta es la pagina de registro de trabajadores </p>  
+
+<form method="POST" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrarse</button>
+</form> 

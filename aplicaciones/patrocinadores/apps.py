@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TrabajadoresConfig(AppConfig):
+class PatrocinadoresConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'aplicaciones.trabajadores'
+    name = 'aplicaciones.patrocinadores'
